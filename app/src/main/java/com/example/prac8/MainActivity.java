@@ -28,5 +28,30 @@ public class MainActivity extends AppCompatActivity {
         // db.userDao().insert(228, "zxc1337");
         List<User> users = db.userDao().getAll();
         Toast.makeText(this, String.valueOf(users.get(0).userID) + users.get(0).login, Toast.LENGTH_LONG).show();
+        try {
+            String filename =  "AppSpecStorage";
+            File file = new File(this.getFilesDir(), filename);
+            Log.d(filename, String.valueOf(file.createNewFile()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        try {
+            String filename = "example";
+            String fileContent = "Hello World!";
+            File file2 = new File(Environment.getExternalStorageDirectory(), filename);
+            FileOutputStream fos = new FileOutputStream(file2);
+            fos.write(fileContent.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("zxc", "Hello world!");
+        editor.putInt("zxc1", 1488);
+        editor.apply();
     }
 }
